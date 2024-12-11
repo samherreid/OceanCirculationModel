@@ -1,0 +1,10 @@
+name: ocean-env
+channels:
+  - conda-forge
+dependencies:
+  - julia
+  - pip
+  - notebook
+  - ipykernel
+postBuild:
+  - julia -e 'using Pkg; Pkg.add(["Oceananigans", "Plots", "DataFrames", "CSV"]); using Pkg; Pkg.instantiate()'
