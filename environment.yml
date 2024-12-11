@@ -1,4 +1,4 @@
-name: ocean-env
+name: julia-env
 channels:
   - conda-forge
 dependencies:
@@ -6,5 +6,21 @@ dependencies:
   - pip
   - notebook
   - ipykernel
+  - python
+  - matplotlib
+  - numpy
+  - scipy
 postBuild:
-  - julia -e 'using Pkg; Pkg.add(["Oceananigans", "Plots", "DataFrames", "CSV"]); using Pkg; Pkg.instantiate()'
+  - julia -e '
+    using Pkg;
+    Pkg.add([
+      "IJulia",
+      "Oceananigans",
+      "Plots",
+      "DataFrames",
+      "CSV",
+      "StatsPlots",
+      "DifferentialEquations"
+    ]);
+    Pkg.precompile();'
+
