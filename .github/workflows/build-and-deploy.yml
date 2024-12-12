@@ -1,0 +1,27 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build the Docker Image
+        run: docker build -t ocean-notebook .
+
+      - name: Push the Docker Image to GitHub Container Registry
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          tags: ocean-notebook:latest
+          
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          publish_dir: ./docs
+          github_token: ${{ secrets.GITHUB_TOKEN }}
